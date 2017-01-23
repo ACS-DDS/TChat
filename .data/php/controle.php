@@ -2,7 +2,7 @@
 session_start();
 
 if(!isset($_SESSION["username"])){
-	header("Location: http://corentinp.dijon.codeur.online/Chat/login");
+	header("Location: http://corentinp.dijon.codeur.online/TChat/login");
 	exit;
 }
 

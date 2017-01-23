@@ -1,0 +1,1 @@
+<li class="<?=$this->status;?>"><a id="pm-<?=$this->pseudo;?>" href="#"><?=$this->pseudo;?></a></li>

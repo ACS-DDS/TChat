@@ -6,162 +6,84 @@
 
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-		<title>Chat PHP & AJAX</title>
+		<title>TChat - Index</title>
 
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/3.1.1/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=PT+Sans+Caption">
+		<link rel="stylesheet" type="text/css" href=".static/css/styles.css?<?=time();?>">
 
-		<style type="text/css" media="screen">
-			div#header {
-			    background: blue;
-			    position: fixed;
-			    top: 0;
-			    left: 0;
-			    width: 100%;
-			    height: 45px;
-			    margin: auto;
-			    text-align: center;
-			    box-shadow: 0px 6px 6px blue;
-			}
-			div#header form{
-				margin:5px auto;
-			}
-			div#message{
-			    background: grey;
-			    padding: 5px;
-			    border-radius: 5px;
-			    width: 50%;
-			    margin: 10px 10%;
-			}
-			div#message:first-child{
-			    background: grey;
-			    padding: 5px;
-			    border-radius: 5px;
-			    width: 50%;
-			    margin: 60px 10% 0;
-			}
-			div#message:last-child{
-			    background: pink;
-			}
-			p.content{
-				font-style:italic;
-			}
-			p.author{
-				font-size:20px;
-			}
-			p{
-				margin:0;
-			}
-			form>p{
-				color:white;
-			}
-			div#messages{
-				widows:78.3%;
-				margin:0px;
-			}
-			div#utilisateurs{
-				font-weight:bold;
-				background:red;
-				position:fixed;
-				top:0;
-				bottom:0;
-				right:0;
-				padding:1%;
-				width:20%;
-			}
-			div#utilisateur{
-				margin:0 0 5%;
-			}
-			.logged{
-				color:#00e800;
-			}
-		</style>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/3.1.1/jquery.min.js?<?=time();?>"></script>
 	</head>
 	<body>
+		<div class="notif" id="success">
+			<div class="succes">
+				<p id="bienvenue">Bonjour et bienvenue sur TChat, <b>Jacques !</b></p>
+			</div>
+		</div>
 		<div id="header">
-			<form method="post">
-				<p>Bienvenue, <b><?=$_SESSION["username"];?></b>.</p>
-				
-				<input type="text" id="content" name="content" placeholder="Message" />
-				<input type="button" id="send" name="submit" value="Send" />
-				<input type="button" id="logout" name="logout" value="Logout" />
+			<h1 id="ch-name">random</h1>
+			<input type="text" id="search" name="search" placeholder="🔍Rechercher">
+			<input type="button" id="logout" name="logout" value="🚪">
+		</div>
+		<div id="footer">
+			<form id="form" method="post">
+				<input type="text" id="content" name="content" placeholder="Ecrivez votre message...">
+				<!-- <input type="button" id="send" name="submit" value="Send" /> -->
+				<input type="button" name="send" id="send" value="↩">
 <?php if($_SESSION["username"] == "Corentin") : ?>
 				<input type="button" id="reset" name="reset" value="Reset" />
 <?php endif;?>
-				<input type="hidden" id="author" name="author" value="<?=$_SESSION['username'];?>" />
+				<input type="hidden" id="author" name="author" value="Jacques">
 			</form>
 		</div>
 		<div id="messages"></div>
-		<div id="utilisateurs"></div>
+		<div id="sidebar">
+			<div id="channels">
+				Channels
+				<input type="button" id="createchannel" name="createchannel" value="+" />
+				<ul id="ch"></ul>
+			</div>
+			<div id="pm">
+				Direct Messages
+				<input type="button" id="directmessage" name="directmessage" value="+" />
+				<ul id="logged"></ul>
+			</div>
+		</div>
+		<div id="copyright">
+			<p class="date"></p>
+			<p>Design by <a href="http://alexm.dijon.codeur.online" target="_blank">@Alex</a> & <a href="http://corentinp.dijon.codeur.online" target="_blank">@Kasai.</a></p>
+		</div>
 		<script type="text/javascript">
-			$("#send").click(function(e){
-				e.preventDefault();
-
-				var author = encodeURIComponent($("#author").val());
-				var content = encodeURIComponent($("#content").val());
-
-				if(author != "" && content != ""){
-					$.ajax({
-						url:"act.php",
-						method:"POST",
-						data:"author=" + author + "&content=" + content,
-						success:function(){
-							$("#content").val("");
-						}
-					});
-				}
+			var channel = "general";
+			$(document).ready(function(){
+				window.location="#success";
+				setTimeout(function(){window.location="#";},1500);
+				$(".date").html("© Corentin PERROT | "+d.getFullYear());
+				$(window).on("unload",logout);
+				$("#form").submit(send);
+<?php if($_SESSION["username"] == "Corentin") : ?>
+				$("#reset").click(reset);
+				//$("#").click(deletechannel);
+<?php endif;?>
+				$("#createchannel").click(createchannel);
+				$("#logout").click(logout);
+				login();
 			});
-
-			$("#reset").click(function(){
-				$.ajax({
-					url:"act.php",
-					method:"POST",
-					data:"reset"
-				});
-			});
-
-			$("#logout").click(function(){
-				$.ajax({
-					url:"act.php",
-					method:"POST",
-					data:"logout=" + "<?=$_SESSION['pseudo'];?>"
-				}).done(function(){
-					window.location = "http://corentinp.dijon.codeur.online/Chat/login";
-				});
-			});
-
-			var login = function(){
-				$.ajax({
-					url:"act.php",
-					method:"POST",
-					data:"login=" + "<?=$_SESSION['pseudo'];?>"
-				})
-			}
-
-			var logged = function(){
-				$.ajax({
-					url:"act.php",
-					method:"POST",
-					data:"logged",
-					success:function(result){
-						$("#utilisateurs").first().html(result);
-					}
-				})
-			}
-
-			var get = function(){
-				$.ajax({
-					url:"act.php",
-					method:"POST",
-					data:"get",
-					success:function(result){
-						$("#messages").first().html(result);
-						$("html,body").animate({scrollTop:$("html,body").get(0).scrollHeight},1000);
-					}
-				})
-			}
-			setInterval(get,1000);
-			setInterval(logged,1000);
-			login();
+			var d=new Date();
+			var login=function(){$.ajax({url:"act.php",method:"POST",data:"login=<?=$_SESSION['username'];?>"})};
+			var get=function(){$.ajax({url:"act.php",method:"POST",data:"channel="+channel+"&get",success:function(data){$("#messages").html(data);$("#messages").animate({scrollTop:$("#messages").get(0).scrollHeight},2000)}})};
+			var logout=function(){$.ajax({url:"act.php",method:"POST",data:"logout=<?=$_SESSION['username'];?>",success:function(){window.location="http://corentinp.dijon.codeur.online/TChat/login"}})};
+<?php if($_SESSION["username"] == "Corentin") : ?>
+			var reset=function(){$.ajax({url:"act.php",method:"POST",data:"channel="+channel+"&reset"})};
+			var deletechannel=function(){$.ajax({url:"act.php",method:"POST",data:"deletechannel="+channel})};
+<?php endif;?>
+			var createchannel=function(){var ch_name = prompt("Entrez le nom de votre Channel");$.ajax({url:"act.php",method:"POST",data:"createchannel="+ch_name})};
+			var users=function(){$.ajax({url:"act.php",method:"POST",data:"users",success:function(data){$("#logged").html(data);}})};
+			var channels=function(){$.ajax({url:"act.php",method:"POST",data:"channels",success:function(data){$("#ch").html(data);}})};
+			var send=function(e){var author=encodeURIComponent($("#author").val());var content=encodeURIComponent($("#content").val());if(author!=""&&content!=""){$.ajax({url:"act.php",method:"POST",data:"channel="+channel+"&author="+author+"&content="+content,success:function(){$("#content").val("")}})}e.preventDefault();};
+			var change=function(id){$.ajax({url:"act.php",method:"POST",data:"change=" + id,success:function(data){$("#messages").html(data);}});$("#ch-name").html(id);};
+			var it_get = setInterval(get,1000);
+			var it_users = setInterval(users,1000);
+			var it_channels = setInterval(channels,1000);
 		</script>
 	</body>
 </html>

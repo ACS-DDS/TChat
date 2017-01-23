@@ -3,6 +3,7 @@ class Message{
 	protected $author;
 	protected $message;
 	protected $date;
+	protected $pseudo;
 
 	public function __construct($array){
 		/*echo "</br> ---- </br>";
@@ -10,12 +11,6 @@ class Message{
 		var_dump($array);
 		var_dump($this);
 		echo "</br> ---- </br>";*/
-
-		/*$this->author  = $array[0];
-		$this->message = $array[1];
-		$this->date    = $array[2];*/
-
-		////////////////////////////
 
 		$this->author  = $array["author"];
 		$this->message = $array["content"];
@@ -25,15 +20,7 @@ class Message{
 	public function toArray(){
 		/*echo "</br> ---- </br>";
 		echo "Message::toArray() : ";
-		var_dump(array("author" => $this->author,"content" => $this->message,"date" => $this->date));
-		echo "</br> ---- </br>";
 		var_dump($this);
-		echo "</br> ---- </br>";
-		var_dump($this->author);
-		echo "</br> ---- </br>";
-		var_dump($this->message);
-		echo "</br> ---- </br>";
-		var_dump($this->date);
 		echo "</br> ---- </br>";*/
 
 		return array("author" => $this->author,"content" => $this->message,"date" => $this->date);
@@ -43,12 +30,6 @@ class Message{
 		/*echo "</br> ---- </br>";
 		echo "Message::html() : ";
 		var_dump($this);
-		echo "</br> ---- </br>";
-		var_dump($this->author);
-		echo "</br> ---- </br>";
-		var_dump($this->message);
-		echo "</br> ---- </br>";
-		var_dump($this->date);
 		echo "</br> ---- </br>";*/
 
 		ob_start();
