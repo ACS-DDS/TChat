@@ -16,35 +16,34 @@
 	<body>
 		<div class="notif" id="success">
 			<div class="succes">
-				<p id="bienvenue">Bonjour et bienvenue sur TChat, <b>Jacques !</b></p>
+				<p id="bienvenue">Bonjour et bienvenue sur TChat, <b><?=$_SESSION["username"];?> !</b></p>
 			</div>
 		</div>
 		<div id="header">
 			<h1 id="ch-name">random</h1>
-			<input type="text" id="search" name="search" placeholder="🔍Rechercher">
+<?php if($_SESSION["username"] == "Corentin" || $_SESSION["username"] == "|==Al3x==|") : ?>
+			<input type="button" id="reset" name="reset" value="Reset" />
+<?php endif;?>
+			<input type="text" id="search" name="search" placeholder="🔍Rechercher" value="ça sert à faire parler les curieux.">
 			<input type="button" id="logout" name="logout" value="🚪">
 		</div>
 		<div id="footer">
 			<form id="form" method="post">
 				<input type="text" id="content" name="content" placeholder="Ecrivez votre message...">
-				<!-- <input type="button" id="send" name="submit" value="Send" /> -->
-				<input type="button" name="send" id="send" value="↩">
-<?php if($_SESSION["username"] == "Corentin") : ?>
-				<input type="button" id="reset" name="reset" value="Reset" />
-<?php endif;?>
-				<input type="hidden" id="author" name="author" value="Jacques">
+				<input type="button" id="send" name="submit" value="↩">
+				<input type="hidden" id="author" name="author" value="<?=$_SESSION["username"];?>">
 			</form>
 		</div>
 		<div id="messages"></div>
 		<div id="sidebar">
 			<div id="channels">
 				Channels
-				<input type="button" id="createchannel" name="createchannel" value="+" />
+				<input type="button" id="createchannel" name="createchannel" value="+">
 				<ul id="ch"></ul>
 			</div>
 			<div id="pm">
 				Direct Messages
-				<input type="button" id="directmessage" name="directmessage" value="+" />
+				<input type="button" id="directmessage" name="directmessage" value="+">
 				<ul id="logged"></ul>
 			</div>
 		</div>
@@ -54,6 +53,7 @@
 		</div>
 		<script type="text/javascript">
 			var channel = "general";
+			var user;
 			$(document).ready(function(){
 				window.location="#success";
 				setTimeout(function(){window.location="#";},1500);
@@ -75,6 +75,7 @@
 <?php if($_SESSION["username"] == "Corentin") : ?>
 			var reset=function(){$.ajax({url:"act.php",method:"POST",data:"channel="+channel+"&reset"})};
 			var deletechannel=function(){$.ajax({url:"act.php",method:"POST",data:"deletechannel="+channel})};
+			var deleteuser=function(){$.ajax({url:"act.php",method:"POST",data:"deleteuser="+user})};
 <?php endif;?>
 			var createchannel=function(){var ch_name = prompt("Entrez le nom de votre Channel");$.ajax({url:"act.php",method:"POST",data:"createchannel="+ch_name})};
 			var users=function(){$.ajax({url:"act.php",method:"POST",data:"users",success:function(data){$("#logged").html(data);}})};
@@ -84,6 +85,7 @@
 			var it_get = setInterval(get,1000);
 			var it_users = setInterval(users,1000);
 			var it_channels = setInterval(channels,1000);
+			clear();
 		</script>
 	</body>
 </html>

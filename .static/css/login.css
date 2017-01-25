@@ -1,0 +1,90 @@
+.log1{
+	background-color: #3A3C3D;
+	width: 50%;
+	height: 60%;
+	margin: auto;
+	margin-top: 8%;
+	box-shadow: 3px 3px 3px 3px black;
+}
+#login_erg{
+	text-align: center;
+	padding-top: 120px;
+}
+#nom,
+#prenom,
+#password,
+#mail,
+#pseudo,
+#img,
+#send{
+	padding: 1%;
+	outline: none;
+	border: 2px solid black;
+}
+#send{
+	padding: 1%;
+	outline: none;
+	border: 2px solid black;
+	background-color: #fff;
+}
+#send:hover{
+	background-color: #272829;
+	border: 2px solid green;
+}
+#send:active{
+	background-color: #181919;
+}
+#btn_guest{
+	margin-left:75%;
+	margin-top:14.7%;
+}
+#log_guest{
+	padding: 5%;
+	margin-top: -60px;
+	border: 2px solid orange;
+	background-color: #fff;
+	font-family: 'PT Sans Caption', sans-serif;
+	outline: none;
+}
+#log_guest:hover{
+	border: 2px solid #fff;		
+	background-color: orange;
+	color: #fff;
+}
+#log_guest:active{
+	background-color: #916E00;
+}
+h3{
+	margin-bottom: -60px;
+	padding-top: 30px;
+	text-align: center;
+	font-family: 'PT Sans Caption', sans-serif;
+	color: #fff;
+	font-size: 25px;
+	border-bottom: 2px solid #fff;
+}
+h4{
+	padding-top: 20px;
+	margin-bottom: 60px;
+	text-align: center;
+	font-family: 'PT Sans Caption', sans-serif;
+	color: #fff;
+	font-size: 25px;
+	border-bottom: 2px solid #fff;	
+}
+#login_ins{
+	text-align: center;
+}
+#p_user{
+	margin-top: 90px;
+	margin-left: 55%;
+	color: #fff;
+	font-size: 14px;
+	font-family: 'PT Sans Caption', sans-serif;
+}
+#copyright{
+	position:fixed;
+	bottom:20px;
+	left:20px;
+	font-size:10px;
+}

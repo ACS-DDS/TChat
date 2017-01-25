@@ -1,12 +1,14 @@
 <?php
 
-require_once(".classes/mapper.php");
-require_once(".classes/message.php");
+require_once(".classes/usermapper.php");
 require_once(".classes/messagemapper.php");
+require_once(".classes/channelmapper.php");
+require_once(".classes/message.php");
 
 class Controller{
-	protected $m;
-	protected $mapper;
+	protected $message_mapper;
+	protected $user_mapper;
+	protected $channel_mapper;
 
 	public function __construct($channel = "general"){
 		/*echo "</br> ---- </br>";
@@ -14,13 +16,19 @@ class Controller{
 		var_dump($this);
 		echo "</br> ---- </br>";*/
 
-		$this->m = new Mapper();
-		$this->mapper = new MessageMapper($channel);
+		$this->user_mapper    = new UserMapper();
+		$this->message_mapper = new MessageMapper($channel);
+		$this->channel_mapper = new ChannelMapper($channel);
 	}
 
 	private function isRegistered(){
 		return isset($_SESSION["username"]);
 	}
+
+	////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
 
 	public function register($nom){
 		/*echo "</br> ---- </br>";
@@ -29,7 +37,7 @@ class Controller{
 		var_dump($this);
 		echo "</br> ---- </br>";*/
 
-		return $this->m->register($nom);
+		return $this->user_mapper->register($nom);
 	}
 
 	public function login($nom){
@@ -39,7 +47,7 @@ class Controller{
 		var_dump($this);
 		echo "</br> ---- </br>";*/
 
-		return $this->m->login($nom);
+		return $this->user_mapper->login($nom);
 	}
 
 	public function logout($pseudo){
@@ -49,7 +57,7 @@ class Controller{
 		var_dump($this);
 		echo "</br> ---- </br>";*/
 
-		return $this->m->logout($pseudo);
+		return $this->user_mapper->logout($pseudo);
 	}
 
 	public function getMembers(){
@@ -59,8 +67,23 @@ class Controller{
 		var_dump($this);
 		echo "</br> ---- </br>";*/
 
-		return $this->m->getMembers();
+		return $this->user_mapper->getMembers();
 	}
+
+	public function deleteUser($name){
+		if(!$this->isRegistered()) return;
+		/*echo "</br> ---- </br>";
+		echo "Controller::getMembers() : ";
+		var_dump($this);
+		echo "</br> ---- </br>";*/
+
+		return $this->user_mapper->deleteUser($name);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
 
 	public function changeChannel(){
 		if(!$this->isRegistered()) return;
@@ -69,7 +92,7 @@ class Controller{
 		var_dump($this);
 		echo "</br> ---- </br>";*/
 
-		return $this->mapper->getMessages();
+		return $this->message_mapper->getMessages();
 	}
 
 	public function createChannel($name){
@@ -79,8 +102,23 @@ class Controller{
 		var_dump($this);
 		echo "</br> ---- </br>";*/
 
-		return $this->mapper->createChannel($name);
+		return $this->channel_mapper->createChannel($name);
 	}
+
+	public function deleteChannel($name){
+		/*echo "</br> ---- </br>";
+		echo "Controller::deleteChannel($.name) : ";
+		var_dump($name);
+		var_dump($this);
+		echo "</br> ---- </br>";*/
+
+		return $this->channel_mapper->deleteChannel($name);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
 
 	public function getMessages(){
 		if(!$this->isRegistered()) return;
@@ -89,7 +127,7 @@ class Controller{
 		var_dump($this);
 		echo "</br> ---- </br>";*/
 
-		return $this->mapper->getMessages();
+		return $this->message_mapper->getMessages();
 	}
 
 	public function addMessages($array){
@@ -97,9 +135,11 @@ class Controller{
 		/*echo "</br> ---- </br>";
 		echo "Controller::addMessages($.array) : ";
 		var_dump($this);
+		echo "</br> ---- </br>";
+		var_dump($array);
 		echo "</br> ---- </br>";*/
 
-		return $this->mapper->addMessage(new Message($array));
+		return $this->message_mapper->addMessage(new Message($array));
 	}
 
 	public function resetMessages(){
@@ -109,6 +149,6 @@ class Controller{
 		var_dump($this);
 		echo "</br> ---- </br>";*/
 
-		return $this->mapper->resetMessages();
+		return $this->message_mapper->resetMessages();
 	}
 }

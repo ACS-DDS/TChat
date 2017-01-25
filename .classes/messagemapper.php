@@ -4,6 +4,7 @@ require_once(".classes/message.php");
 
 class MessageMapper{
 	private $fichier;
+	private $fichier_temp;
 	
 	public function __construct($channel = "general"){
 		/*echo "</br> ---- </br>";
@@ -18,7 +19,7 @@ class MessageMapper{
 
 	public function addMessage($obj){
 		/*echo "</br> ---- </br>";
-		echo "MessageMapper::addMessages($.obj) : ";
+		echo "MessageMapper::addMessage($.obj) : ";
 		var_dump($obj);
 		echo "</br> ---- </br>";*/
 
@@ -47,29 +48,13 @@ class MessageMapper{
 			var_dump($list);
 			echo "</br> ---- </br>";*/
 		}
+		fclose($file);
 
 		if(empty($messages)) : 
 			return array(new Message(array("author" => "Admin","content" => "Ceci est le Message par défault","date" => "1485160479.8259")));
 		else : 
 			return $messages;
 		endif;
-	}
-
-	public function createChannel($name){
-		echo "</br> ---- </br>";
-		echo "MessageMapper::createChannel($.name) : ";
-		var_dump($name);
-		echo "</br> ---- </br>";
-		var_dump($this);
-		echo "</br> ---- </br>";
-
-		if($name != "null"){
-			if(!file_exists($this->fichier = __DIR__ . "/../.data/db/channels/" . $name . ".csv")){
-				touch($this->fichier);
-				var_dump($this->fichier);
-				echo "</br> ---- </br>";
-			}
-		}
 	}
 
 	public function resetMessages(){

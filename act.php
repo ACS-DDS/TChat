@@ -27,6 +27,16 @@ if(isset($_POST["createchannel"])) :
 	$_SESSION["TChat"]->createChannel($_POST["createchannel"]);
 endif;
 
+// DELETECHANNEL
+if(isset($_POST["deletechannel"])) : 
+	$_SESSION["TChat"]->deleteChannel($_POST["deletechannel"]);
+endif;
+
+// DELETEUSER
+if(isset($_POST["deleteuser"])) : 
+	$_SESSION["TChat"]->deleteUser($_POST["deleteuser"]);
+endif;
+
 // CHANNELS
 if(isset($_POST["channels"])) : 
 	$dir   = ".data/db/channels";
@@ -35,7 +45,10 @@ if(isset($_POST["channels"])) :
 
 	$out = str_replace($ext,"",$files);
 foreach($out as $id => $channel) : ?>
-<li><a id="ch-<?=$id;?>" name="<?=$channel;?>" href="#" onclick="channel = this.name;change(this.name)"><?=$channel;?></a></li>
+<li>
+	<a id="ch-<?=$id;?>" name="<?=$channel;?>" href="#" onclick="channel = this.name;change(this.name)"><?=$channel;?></a>
+	<input type="button" id="suppr" name="<?=$channel;?>" onclick="channel = this.name;deletechannel(this.name)" value="✖">
+</li>
 <?php endforeach; endif;
 
 // CHANGE
