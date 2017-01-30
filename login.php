@@ -11,19 +11,20 @@ if(isset($_SESSION["username"])){
 }
 
 if(isset($_POST["nom"])) : 
-	if(!isset($_POST["nom"]) || $_POST["nom"] == "" || !isset($_POST["prenom"]) || $_POST["prenom"] == "" || !isset($_POST["password"]) || $_POST["password"] == ""){
+	echo var_dump($_POST);
+	if(!isset($_POST["nom"]) || $_POST["nom"] == "" || /*!isset($_POST["prenom"]) || $_POST["prenom"] == "" || */!isset($_POST["password"]) || $_POST["password"] == ""){
 		$msg[] = "Merci de renseigner tous les champs";
 		$_SESSION["msg"] = $msg;
 		header("Location: http://corentinp.dijon.codeur.online/TChat/login");
 		exit;
 	}
 
-	if(isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["password"])){
+	if(isset($_POST["nom"]) /*&& isset($_POST["prenom"]) */&& isset($_POST["password"])){
 		$file = fopen(".data/db/users.csv","r");
 
 		while($data = fgetcsv($file,0)){
-			if($data[0] == $_POST["nom"] && $data[1] == $_POST["prenom"] && $date[2] == sha1(md5("raton" + $_POST["password"] + "laveur"))){
-				$_SESSION["username"] = $_POST["nom"] . " " . $_POST["prenom"];
+			if($data[0] == $_POST["nom"] /*&& $data[1] == $_POST["prenom"] */&& $data[1] == sha1(md5("raton" + $_POST["password"] + "laveur"))){
+				$_SESSION["username"] = $_POST["nom"]/* . " " . $_POST["prenom"]*/;
 				header("Location: http://corentinp.dijon.codeur.online/TChat");
 				exit;
 			}

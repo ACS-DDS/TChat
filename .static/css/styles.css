@@ -155,6 +155,7 @@ div#pm{
 	width:10%;
 	margin-top: 100px;
 }
+div#sidebar ul#user-logged li.logged:before,
 div#pm li.logged:before{
 	content:"✔";
 	color: green;
@@ -268,7 +269,7 @@ div#utilisateur{
 	color: green;
 	border: 1px solid white;
 	outline: none;
-	margin-left: 45%;
+	margin-left: 37%;
 }
 #createchannel:hover{
 	background-color: #fff;
@@ -283,7 +284,7 @@ div#utilisateur{
 	color: green;
 	border: 1px solid white;
 	outline: none;
-	margin-left: 9%;
+	margin-left: 3%;
 }
 #directmessage:hover{
 	background-color: #fff;

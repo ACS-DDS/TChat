@@ -11,6 +11,7 @@ class MessageMapper{
 		echo 'MessageMapper::__construct($.channel = "general") : ';
 		var_dump($obj);
 		echo "</br> ---- </br>";*/
+		$this->fichier_temp = __DIR__ . "/../.data/db/channels/" . $channel . "_temp.csv";
 
 		if(!file_exists($this->fichier = __DIR__ . "/../.data/db/channels/" . $channel . ".csv")){
 			touch($this->fichier);
@@ -55,6 +56,29 @@ class MessageMapper{
 		else : 
 			return $messages;
 		endif;
+	}
+
+	public function deleteMessage($name){
+		echo "</br> ---- </br>";
+		echo "MessageMapper::deleteMessage($.name) : ";
+		var_dump($name);
+		echo "</br> ---- </br>";
+		var_dump($this);
+		echo "</br> ---- </br>";
+
+		$table = fopen($this->fichier,"r");
+		$temp_table = fopen($this->fichier_temp,"w");
+
+		while(($data = fgetcsv($table,1000)) !== FALSE){
+		    if($data[1] == $name){ // this is if you need the first column in a row
+		        continue;
+		    }
+		    var_dump($data);
+		    fputcsv($temp_table,$data);
+		}
+		fclose($table);
+		fclose($temp_table);
+		rename($this->fichier_temp,$this->fichier);
 	}
 
 	public function resetMessages(){

@@ -151,4 +151,14 @@ class Controller{
 
 		return $this->message_mapper->resetMessages();
 	}
+
+	public function deleteMessage($name){
+		if(!$this->isRegistered()) return;
+		/*echo "</br> ---- </br>";
+		echo "Controller::deleteMessage($.name) : ";
+		var_dump($this);
+		echo "</br> ---- </br>";*/
+
+		return $this->message_mapper->deleteMessage($name);
+	}
 }

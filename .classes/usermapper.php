@@ -43,6 +43,9 @@ class UserMapper{
 		fclose($file);
 		fclose($file_temp);
 		rename(".data/db/users_temp.csv",".data/db/users.csv");
+
+		session_destroy();
+		header("Location: http://corentinp.dijon.codeur.online/TChat/login");
 	}
 
 	public function getMembers(){
@@ -80,7 +83,7 @@ class UserMapper{
 		$temp_table = fopen($this->fichier_temp,"w");
 
 		while(($data = fgetcsv($table,1000)) !== FALSE){
-		    if(reset($data) == $name){ // this is if you need the first column in a row
+		    if($data[2] == $name){ // this is if you need the first column in a row
 		        continue;
 		    }
 		    var_dump($data);
