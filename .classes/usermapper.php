@@ -3,22 +3,24 @@
 require_once(".classes/user.php");
 
 class UserMapper{
+	protected $file;
+	protected $file_temp;
 	
-	public function __construct(){}
+	public function __construct(){
+		$this->file = __DIR__ . "/../.data/db/users.csv";
+		$this->file_temp = __DIR__ . "/../.data/db/users_temp.csv";
+	}
 
 	public function register($nom){
 		return "ok";
 	}
 
 	public function login($pseudo){
-		$file = fopen(".data/db/users.csv","r");
-		$file_temp = fopen(".data/db/users_temp.csv","w");
+		$file = fopen($this->file,"r");
+		$file_temp = fopen($this->file_temp,"w");
 
 		while(false !== ($data = fgetcsv($file))){
 			if($data[0] == $pseudo){
-				var_dump($data[0]);
-				var_dump($pseudo);
-				var_dump($data);
 				$data[3] = "logged";
 			}
 			fputcsv($file_temp,$data);
@@ -26,12 +28,12 @@ class UserMapper{
 
 		fclose($file);
 		fclose($file_temp);
-		rename(".data/db/users_temp.csv",".data/db/users.csv");
+		rename($this->file_temp,$this->file);
 	}
 
 	public function logout($pseudo){
-		$file = fopen(".data/db/users.csv","r");
-		$file_temp = fopen(".data/db/users_temp.csv","w");
+		$file = fopen($this->file,"r");
+		$file_temp = fopen($this->file_temp,"w");
 
 		while(false !== ($data = fgetcsv($file))){
 			if($data[0] == $pseudo){
@@ -42,53 +44,35 @@ class UserMapper{
 
 		fclose($file);
 		fclose($file_temp);
-		rename(".data/db/users_temp.csv",".data/db/users.csv");
+		rename($this->file_temp,$this->file);
 
 		session_destroy();
 		header("Location: http://corentinp.dijon.codeur.online/TChat/login");
 	}
 
 	public function getMembers(){
-		$file = fopen(".data/db/users.csv","r");
+		$file = fopen($this->file,"r");
 
 		while($list = fgetcsv($file,0)){
 			$users[] = new User($list);
-
-			/*echo "</br> ---- </br>";
-			echo "Mapper::getMembers() (while) : ";
-			var_dump($list);
-			echo "</br> ---- </br>";*/
 		}
 
 		return $users;
-
-		/*echo "</br> ---- </br>";
-		echo "Mapper::getMembers() : ";
-		var_dump($users);
-		echo "</br> ---- </br>";*/
 	}
 
 	public function deleteUser($name){
-		$this->fichier = __DIR__ . "/../.data/db/users.csv";
-		$this->fichier_temp = __DIR__ . "/../.data/db/users_temp.csv";
-
-		echo "</br> ---- </br>";
-		echo "MessageMapper::deleteUser($.name) : ";
-		var_dump($name);
-		echo "</br> ---- </br>";
-		var_dump($this);
-		echo "</br> ---- </br>";
-
 		$table = fopen($this->fichier,"r");
 		$temp_table = fopen($this->fichier_temp,"w");
 
 		while(($data = fgetcsv($table,1000)) !== FALSE){
-		    if($data[2] == $name){ // this is if you need the first column in a row
-		        continue;
-		    }
-		    var_dump($data);
-		    fputcsv($temp_table,$data);
+			if($data[2] == $name){ // this is if you need the first column in a row
+				continue;
+			}
+
+			var_dump($data);
+			fputcsv($temp_table,$data);
 		}
+
 		fclose($table);
 		fclose($temp_table);
 		rename($this->fichier_temp,$this->fichier);
