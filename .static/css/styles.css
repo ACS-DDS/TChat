@@ -29,7 +29,7 @@ a:focus{
 	pointer-events: auto;
 }
 .notif>.succes{
-	background-color:rgba(3, 201, 169, 0.7);
+	background-color:rgba(3,201,169,0.7);
 }
 div#footer {
 	background: transparent;
@@ -43,7 +43,7 @@ div#footer {
 	margin-top: 50px;
 }
 div#header {
-	background:#8A8579;
+	background:#09a74e;
 	position:fixed;
 	top:0;
 	right:0;
@@ -61,6 +61,9 @@ div#header>h1{
 	text-shadow: 2px 2px 2px black;
 	font-family: 'Overlock', cursive;
 	position:fixed;
+}
+div#header>h1#ch-name{
+	font-family:"Ubuntu",sans-serif;
 }
 div#header>h1:before{
 	content:"#";
