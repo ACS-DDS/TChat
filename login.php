@@ -1,7 +1,7 @@
 <?php
 require(".classes/controller.php");
 session_start();
-$msg = [];
+$errors = [];
 
 $_SESSION["TChat"] = new Controller();
 
@@ -12,27 +12,27 @@ if(isset($_SESSION["username"])){
 
 if(isset($_POST["nom"])) : 
 	echo var_dump($_POST);
-	if(!isset($_POST["nom"]) || $_POST["nom"] == "" || /*!isset($_POST["prenom"]) || $_POST["prenom"] == "" || */!isset($_POST["password"]) || $_POST["password"] == ""){
-		$msg[] = "Merci de renseigner tous les champs";
-		$_SESSION["msg"] = $msg;
+	if(!isset($_POST["nom"]) || $_POST["nom"] == "" || !isset($_POST["prenom"]) || $_POST["prenom"] == "" || !isset($_POST["password"]) || $_POST["password"] == ""){
+		$errors[] = "Merci de renseigner tous les champs";
+		$_SESSION["errors"] = $errors;
 		header("Location: http://corentinp.dijon.codeur.online/TChat/login");
 		exit;
 	}
 
-	if(isset($_POST["nom"]) /*&& isset($_POST["prenom"]) */&& isset($_POST["password"])){
+	if(isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["password"])){
 		$file = fopen(".data/db/users.csv","r");
 
 		while($data = fgetcsv($file,0)){
-			if($data[0] == $_POST["nom"] /*&& $data[1] == $_POST["prenom"] */&& $data[1] == sha1(md5("raton" + $_POST["password"] + "laveur"))){
-				$_SESSION["username"] = $_POST["nom"]/* . " " . $_POST["prenom"]*/;
+			if($data[0] == $_POST["nom"] && $data[1] == $_POST["prenom"] && $data[2] == sha1(md5("raton" + $_POST["password"] + "laveur"))){
+				$_SESSION["username"] = $_POST["nom"] . " " . $_POST["prenom"];
 				header("Location: http://corentinp.dijon.codeur.online/TChat");
 				exit;
 			}
 		}
 	}
 
-	$msg[] = "Saisie incorrecte";
-	$_SESSION["msg"] = $msg;
+	$errors[] = "Saisie incorrecte";
+	$_SESSION["errors"] = $errors;
 	header("Location: http://corentinp.dijon.codeur.online/TChat/login");
 endif;?>
 <html>
@@ -44,7 +44,7 @@ endif;?>
 	</head>
 	<body>
 		<div class="log1">
-			<h3>Veuillez vous connecter</h3>
+			<h2 id="login">Veuillez vous connecter</h2>
 			<form id="login_erg" action="login" method="post">
 				<input id="nom" type="text" name="nom" placeholder="Nom">
 				<input id="prenom" type="text" name="prenom" placeholder="Prénom">
@@ -52,7 +52,7 @@ endif;?>
 				<input id="send" type="submit" value="🔓">
 			</form>
 
-			<h4>Tu es nouveau ? Inscris-toi !</h4>
+			<h2 id="register">Tu es nouveau ? Inscris-toi !</h2>
 			<form id="login_ins" action="register" method="post">
 				<input id="nom" type="text" name="nom" placeholder="Nom">
 				<input id="prenom" type="text" name="prenom" placeholder="Prénom"><br/>
@@ -62,18 +62,23 @@ endif;?>
 				<input id="pseudo" type="text" name="pseudo" placeholder="Pseudo"><br/>
 				<input id="send" type="submit" value="✔">
 			</form>
+<?php if(isset($_SESSION["errors"])) : foreach($_SESSION["errors"] as $messages) : ?>
 
-			<!-- <form id="btn_guest" action="login" method="post">
+			<h2 id="error"></h2>
+			<p class="errors"><?=$messages;?></p>
+<?php endforeach;endif;?>
+
+			<!-- <h2></h2>
+			<form id="btn_guest" action="login" method="post">
 				<input type="hidden" name="login" value="guest">
 				<input id="log_guest" type="submit" value="Se connecter en tant qu'invité">
-			</form -->
+			</form> -->
 		</div>
-<?php if(isset($_SESSION["msg"])) : foreach($_SESSION["msg"] as $messages) : ?>
-		<p><?=$messages;?></p>
-<?php endforeach;endif;?>
+
 		<div id="copyright">
 			<p class="date"></p>
 			<p>Design by <a href="http://alexm.dijon.codeur.online" target="_blank">@Alex</a></p>
 		</div>
 	</body>
 </html>
+<?php session_destroy(); ?>

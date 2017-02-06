@@ -4,6 +4,7 @@
 	<p class="author"><?=$this->author;?> <!--(?=$this->pseudo;?)--></p>
 	<p class="content"><?=$this->message;?></p>
 	<p class="time"><?=ucfirst(strftime("%A %e %B %Y à %k:%M:%S",$this->date));?></p>
-
-	<input type="button" name="<?=$this->message;?>" id="clear" value="✕" onclick="deleteMessage(this.name);">
+<?php if($_SESSION["username"] == "PERROT Corentin" || $_SESSION["username"] == "acs dds") : ?>
+	<input type="button" name="<?=$this->message;?>" date="<?=$this->date;?>" id="clear" value="✕" onclick="deleteMessage(this.name,this.attributes[2].value);">
+<?php endif;?>
 </div>

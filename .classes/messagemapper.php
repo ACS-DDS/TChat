@@ -10,7 +10,7 @@ class MessageMapper{
 		$this->fichier_temp = __DIR__ . "/../.data/db/channels/" . $channel . "_temp.csv";
 
 		if(!file_exists($this->fichier = __DIR__ . "/../.data/db/channels/" . $channel . ".csv")){
-			touch($this->fichier);
+			$this->fichier = __DIR__ . "/../.data/db/channels/general.csv";
 		}
 	}
 
@@ -40,16 +40,15 @@ class MessageMapper{
 		endif;
 	}
 
-	public function deleteMessage($name){
+	public function deleteMessage($name,$time){
 		$table = fopen($this->fichier,"r");
 		$temp_table = fopen($this->fichier_temp,"w");
 
 		while(($data = fgetcsv($table,1000)) !== FALSE){
-			if($data[1] == $name){ // this is if you need the first column in a row
+			if($data[1] == $name && $data[2] == $time){
 				continue;
 			}
 
-			var_dump($data);
 			fputcsv($temp_table,$data);
 		}
 

@@ -20,8 +20,8 @@ class UserMapper{
 		$file_temp = fopen($this->file_temp,"w");
 
 		while(false !== ($data = fgetcsv($file))){
-			if($data[0] == $pseudo){
-				$data[3] = "logged";
+			if($data[0] . " " . $data[1] == $pseudo){
+				$data[6] = "logged";
 			}
 			fputcsv($file_temp,$data);
 		}
@@ -36,8 +36,8 @@ class UserMapper{
 		$file_temp = fopen($this->file_temp,"w");
 
 		while(false !== ($data = fgetcsv($file))){
-			if($data[0] == $pseudo){
-				$data[3] = "logged-out";
+			if($data[0] . " " . $data[1] == $pseudo){
+				$data[6] = "logged-out";
 			}
 			fputcsv($file_temp,$data);
 		}
@@ -61,20 +61,19 @@ class UserMapper{
 	}
 
 	public function deleteUser($name){
-		$table = fopen($this->fichier,"r");
-		$temp_table = fopen($this->fichier_temp,"w");
+		$table = fopen($this->file,"r");
+		$temp_table = fopen($this->file_temp,"w");
 
 		while(($data = fgetcsv($table,1000)) !== FALSE){
-			if($data[2] == $name){ // this is if you need the first column in a row
+			if($data[2] == $name){
 				continue;
 			}
 
-			var_dump($data);
 			fputcsv($temp_table,$data);
 		}
 
 		fclose($table);
 		fclose($temp_table);
-		rename($this->fichier_temp,$this->fichier);
+		rename($this->file_temp,$this->file);
 	}
 }

@@ -84,9 +84,9 @@ class Controller{
 		return $this->message_mapper->resetMessages();
 	}
 
-	public function deleteMessage($name){
+	public function deleteMessage($a,$b){
 		if(!$this->isRegistered()) return;
 
-		return $this->message_mapper->deleteMessage($name);
+		return $this->message_mapper->deleteMessage($a,$b);
 	}
 }
