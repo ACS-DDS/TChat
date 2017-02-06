@@ -1,16 +1,25 @@
 <?php
 class User{
-	protected $name;
+	protected $nom;
+	protected $prenom;
+	protected $passw;
+	protected $mail;
+	protected $image;
 	protected $pseudo;
+	protected $status;
 
 	public function __construct($array){
-		$this->name   = $array[0];
-		$this->pseudo = $array[2];
-		$this->status = $array[3];
+		$this->nom    = $array[0];
+		$this->prenom = $array[1];
+		$this->passw  = $array[2];
+		$this->mail   = $array[3];
+		$this->image  = $array[4];
+		$this->pseudo = $array[5];
+		$this->status = $array[6];
 	}
 
 	public function toArray(){
-		return array($this->name,$this->pseudo,$this->status);
+		return array($this->nom,$this->pseudo,$this->status);
 	}
 
 	public function html(){

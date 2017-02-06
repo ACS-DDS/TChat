@@ -30,7 +30,8 @@ if(count($_POST) > 0) :
 		if(isset($_POST["delete"])) : 
 			// DELETE MESSAGE
 			if(isset($_POST["message"])) : 
-				$_SESSION["TChat"]->deleteMessage($_POST["message"]);
+				$_SESSION["TChat"]->deleteMessage($_POST["message"],$_POST["time"]);
+				var_dump($_POST);
 			endif;
 
 			// DELETE CHANNEL
@@ -79,11 +80,11 @@ if(count($_POST) > 0) :
 				endforeach;
 			endif;
 		endif;
+	endif;
 
-		// USERS DELETE
-		if(isset($_POST["delete"])) : 
-			$_SESSION["TChat"]->deleteUser($_POST["users"]);
-		endif;
+	// USERS DELETE
+	if(isset($_POST["usersdelete"])) : 
+		$_SESSION["TChat"]->deleteUser($_POST["usersdelete"]);
 	endif;
 
 	// CHANNELS
@@ -96,7 +97,9 @@ if(count($_POST) > 0) :
 	foreach($out as $id => $channel) : ?>
 	<li>
 		<a id="ch-<?=$id;?>" name="<?=$channel;?>" href="#" onclick="channel=this.name;changeChannel(this.name)"><?=$channel;?></a>
+<?php if($_SESSION["username"] == "PERROT Corentin" || $_SESSION["username"] == "acs dds") : ?>
 		<input type="button" id="suppr" name="<?=$channel;?>" onclick="deleteChannel(this.name)" value="✖">
+<?php endif;?>
 	</li>
 	<?php endforeach;endif;
 
