@@ -7,11 +7,8 @@ class ChannelMapper{
 	public function createChannel($name){
 		$n = trim($name);
 		if($n != "null") : 
-			var_dump($n);
 			if($n != "") : 
-				var_dump($n);
 				if(!file_exists($this->fichier = __DIR__ . "/../.data/db/channels/" . $n . ".csv")) : 
-					var_dump($n);
 					touch($this->fichier);
 				endif;
 			endif;
@@ -24,5 +21,17 @@ class ChannelMapper{
 				unlink(__DIR__ . "/../.data/db/channels/" . $name . ".csv");
 			endif;
 		endif;
+	}
+
+	public function getChannels(){
+		$channel = str_replace(array(".csv"),"",array_diff(scandir(".data/db/channels"),array(".","..")));
+
+		ob_start();
+		require(".data/tpl/channels.tpl");
+		return ob_get_clean();
+	}
+
+	public function __toString(){
+		return $this->getChannels();
 	}
 }

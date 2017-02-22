@@ -54,6 +54,12 @@ class Controller{
 		return $this->message_mapper->getMessages();
 	}
 
+	public function getChannels(){
+		if(!$this->isRegistered()) return;
+
+		return $this->channel_mapper->getChannels();
+	}
+
 	public function createChannel($name){
 		if(!$this->isRegistered()) return;
 
@@ -61,6 +67,8 @@ class Controller{
 	}
 
 	public function deleteChannel($name){
+		if(!$this->isRegistered()) return;
+
 		return $this->channel_mapper->deleteChannel($name);
 	}
 
