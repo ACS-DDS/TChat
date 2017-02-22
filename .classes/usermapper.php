@@ -65,7 +65,7 @@ class UserMapper{
 		$temp_table = fopen($this->file_temp,"w");
 
 		while(($data = fgetcsv($table,1000)) !== FALSE){
-			if($data[2] == $name){
+			if($data[5] == $name){
 				continue;
 			}
 

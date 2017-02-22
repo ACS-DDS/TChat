@@ -19,6 +19,11 @@
 				<p id="bienvenue">Bonjour et bienvenue sur TChat, <b><?=$_SESSION["username"];?> !</b></p>
 			</div>
 		</div>
+		<div class="notif" id="soon">
+			<div class="success">
+				<p id="bienvenue">Fonctionalitée en cours de développement !</b></p>
+			</div>
+		</div>
 		<div id="header">
 			<h1 id="ch-name"></h1>
 <?php if($_SESSION["username"] == "PERROT Corentin" || $_SESSION["username"] == "acs dds") : ?>
@@ -75,6 +80,7 @@
 				login();
 			});
 			var d=new Date();
+			var soon=function(){window.location="#soon";setTimeout(function(){window.location="#";},3000);};
 			var login=function(){$.ajax({url:"act.php",method:"POST",data:"login=<?=$_SESSION['username'];?>"})};
 			var logout=function(){$.ajax({url:"act.php",method:"POST",data:"logout=<?=$_SESSION['username'];?>",success:function(){window.location="./login";}})};
 			var send=function(e){a=encodeURIComponent($("#author").val());c=encodeURIComponent($("#content").val());if(a!=""&&c!=""){$.ajax({url:"act.php",method:"POST",data:"channel="+channel+"&author="+a+"&content="+c,success:function(){$("#content").val("")}})}e.preventDefault();};
