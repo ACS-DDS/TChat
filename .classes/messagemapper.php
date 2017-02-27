@@ -59,7 +59,7 @@ class MessageMapper{
 
 	public function resetMessages(){
 		$file = fopen($this->fichier,"w");
-		fputcsv($file,"");
+		ftruncate($file,0);
 		fclose($file);
 	}
 }

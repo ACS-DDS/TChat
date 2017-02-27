@@ -84,24 +84,22 @@ if(count($_POST) > 0) :
 
 	// USERS DELETE
 	if(isset($_POST["usersdelete"])) : 
-		$_SESSION["TChat"]->deleteUser($_POST["usersdelete"]);
+		$_SESSION["TChat"] = new Controller();
+		$_SESSION["TChat"]->deleteUser(trim($_POST["usersdelete"]));
 	endif;
 
 	// CHANNELS
 	if(isset($_POST["channels"])) : 
-		$dir   = ".data/db/channels";
-		$files = array_diff(scandir($dir),array(".",".."));
-		$ext   = array(".csv");
+		$_SESSION["TChat"] = new Controller();
 
-		$out = str_replace($ext,"",$files);
-	foreach($out as $id => $channel) : ?>
-	<li>
-		<a id="ch-<?=$id;?>" name="<?=$channel;?>" href="#" onclick="channel=this.name;changeChannel(this.name)"><?=$channel;?></a>
-<?php if($_SESSION["username"] == "PERROT Corentin" || $_SESSION["username"] == "acs dds") : ?>
-		<input type="button" id="suppr" name="<?=$channel;?>" onclick="deleteChannel(this.name)" value="✖">
-<?php endif;?>
-	</li>
-	<?php endforeach;endif;
+		// CHANNELS GET
+		if(isset($_POST["get"])) : 
+			$a = $_SESSION["TChat"]->getChannels();
+			if(!empty($a)) : 
+				echo $a;
+			endif;
+		endif;
+	endif;
 
 	// CHANGE
 	if(isset($_POST["change"])) : 
