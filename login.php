@@ -6,7 +6,7 @@ $errors = [];
 $_SESSION["TChat"] = new Controller();
 
 if(isset($_SESSION["username"])){
-	header("Location: http://corentinp.dijon.codeur.online/TChat");
+	header("Location: ./TChat");
 	exit;
 }
 
@@ -15,7 +15,7 @@ if(isset($_POST["nom"])) :
 	if(!isset($_POST["nom"]) || $_POST["nom"] == "" || !isset($_POST["prenom"]) || $_POST["prenom"] == "" || !isset($_POST["password"]) || $_POST["password"] == ""){
 		$errors[] = "Merci de renseigner tous les champs";
 		$_SESSION["errors"] = $errors;
-		header("Location: http://corentinp.dijon.codeur.online/TChat/login");
+		header("Location: ./TChat/login");
 		exit;
 	}
 
@@ -25,7 +25,7 @@ if(isset($_POST["nom"])) :
 		while($data = fgetcsv($file,0)){
 			if($data[0] == $_POST["nom"] && $data[1] == $_POST["prenom"] && $data[2] == sha1(md5("raton" + $_POST["password"] + "laveur"))){
 				$_SESSION["username"] = $_POST["nom"] . " " . $_POST["prenom"];
-				header("Location: http://corentinp.dijon.codeur.online/TChat");
+				header("Location: ./TChat");
 				exit;
 			}
 		}
@@ -33,14 +33,14 @@ if(isset($_POST["nom"])) :
 
 	$errors[] = "Saisie incorrecte";
 	$_SESSION["errors"] = $errors;
-	header("Location: http://corentinp.dijon.codeur.online/TChat/login");
+	header("Location: ./TChat/login");
 endif;?>
 <html>
 	<head>
 		<title>TChat - Login</title>
 
+		<link rel="stylesheet" href="./static/css/login.css?<?=microtime(true);?>">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans+Caption">
-		<link rel="stylesheet" href="./.static/css/login.css?<?=microtime(true);?>">
 	</head>
 	<body>
 		<div class="log1">
@@ -62,19 +62,20 @@ endif;?>
 				<input id="pseudo" type="text" name="pseudo" placeholder="Pseudo"><br/>
 				<input id="send" type="submit" value="✔">
 			</form>
-<?php if(isset($_SESSION["errors"])) : foreach($_SESSION["errors"] as $messages) : ?>
 
-			<h2 id="error"></h2>
-			<p class="errors"><?=$messages;?></p>
-<?php endforeach;endif;?>
-
-			<!-- <h2></h2>
+			<!-- <h2 id="guest">Connecte toi en tant qu'invité !</h2>
 			<form id="btn_guest" action="login" method="post">
 				<input type="hidden" name="login" value="guest">
 				<input id="log_guest" type="submit" value="Se connecter en tant qu'invité">
 			</form> -->
-		</div>
 
+<?php if(isset($_SESSION["errors"])) : ?>
+
+			<h2 id="error">Error!</h2>
+<?php foreach($_SESSION["errors"] as $messages) : µ?>
+			<p class="errors"><?=$messages;?></p>
+<?php endforeach;endif;?>
+		</div>
 		<div id="copyright">
 			<p class="date"></p>
 			<p>Design by <a href="http://alexm.dijon.codeur.online" target="_blank">@Alex</a></p>
