@@ -8,8 +8,8 @@
 
 		<title>TChat - Index</title>
 
+		<link rel="stylesheet" type="text/css" href="./static/css/styles.css?<?=microtime(true);?>">
 		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=PT+Sans+Caption|Ubuntu">
-		<link rel="stylesheet" type="text/css" href=".static/css/styles.css?<?=microtime(true);?>">
 
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/3.1.1/jquery.min.js?<?=microtime(true);?>"></script>
 	</head>
@@ -62,42 +62,47 @@
 			<p>Assistant Technique: <a href="http://yassinl.dijon.codeur.online" target="_blank">@CrackJ</a></p>
 		</div>
 		<script type="text/javascript">
-			var channel = "general",user,ch_name,a,c;
-			$(document).ready(function(){
-				window.location="#success";
-				setTimeout(function(){window.location="#";},1500);
-				$(".date").html("© Corentin PERROT | "+d.getFullYear());
-				$("#ch-name").html(channel);
-				$(window).on("unload",logout);
-				$("#form").submit(send);
-				$("#send").click(send);
+            let channel = 'general'
+            let user
+            let ch_name
+            let a
+            let c
+
+			$(document).ready(() => {
+				window.location='#success'
+				setTimeout(() => {window.location='#';},1500)
+				$('.date').html('© Corentin PERROT | '+d.getFullYear())
+				$('#ch-name').html(channel)
+				$(window).on('unload',logout)
+				$('#form').submit(send)
+				$('#send').click(send)
 <?php if($_SESSION["username"] == "PERROT Corentin" || $_SESSION["username"] == "acs dds") : ?>
-				$("#reset").click(resetChannel);
+				$('#reset').click(resetChannel)
 <?php endif;?>
-				$("#createchannel").click(createChannel);
-				$("#logout").click(logout);
-				setTimeout(function(){$("#messages").animate({scrollTop:$("#messages").get(0).scrollHeight},2000);},500);
-				login();
-			});
-			var d=new Date();
-			var soon=function(){window.location="#soon";setTimeout(function(){window.location="#";},3000);};
-			var login=function(){$.ajax({url:"act.php",method:"POST",data:"login=<?=$_SESSION['username'];?>"})};
-			var logout=function(){$.ajax({url:"act.php",method:"POST",data:"logout=<?=$_SESSION['username'];?>",success:function(){window.location="./login";}})};
-			var send=function(e){a=encodeURIComponent($("#author").val());c=encodeURIComponent($("#content").val());if(a!=""&&c!=""){$.ajax({url:"act.php",method:"POST",data:"channel="+channel+"&author="+a+"&content="+c,success:function(){$("#content").val("")}})}e.preventDefault();};
+				$('#createchannel').click(createChannel)
+				$('#logout').click(logout)
+				setTimeout(() => {$('#messages').animate({scrollTop:$('#messages').get(0).scrollHeight},2000)},500)
+				login()
+			})
+			let d=new Date()
+			let soon=() => {window.location="#soon";setTimeout(() => {window.location="#";},3000);}
+			let login=() => {$.ajax({url:"act.php",method:"POST",data:"login=<?=$_SESSION['username'];?>"})}
+			let logout=() => {$.ajax({url:"act.php",method:"POST",data:"logout=<?=$_SESSION['username'];?>",success:() => {window.location="./login";}})};
+			let send=e => {a=encodeURIComponent($("#author").val());c=encodeURIComponent($("#content").val());if(a!=""&&c!="") => {$.ajax({url:"act.php",method:"POST",data:"channel="+channel+"&author="+a+"&content="+c,success:() => {$("#content").val("")}})}e.preventDefault();};
 <?php if($_SESSION["username"] == "PERROT Corentin" || $_SESSION["username"] == "acs dds") : ?>
-			var deleteChannel=function(a){$.ajax({url:"act.php",method:"POST",data:"channel="+a+"&delete"})};
-			var deleteMessage=function(a,b){$.ajax({url:"act.php",method:"POST",data:"channel="+channel+"&message="+a+"&time="+b+"&delete"})}
-			var deleteUser=function(a){$.ajax({url:"act.php",method:"POST",data:"usersdelete="+a+"&delete"})};
-			var resetChannel=function(){$.ajax({url:"act.php",method:"POST",data:"channel="+channel+"&reset"})};
+			let deleteChannel=a => {$.ajax({url:"act.php",method:"POST",data:"channel="+a+"&delete"})}
+			let deleteMessage=(a,b) => {$.ajax({url:"act.php",method:"POST",data:"channel="+channel+"&message="+a+"&time="+b+"&delete"})}
+			let deleteUser=a => {$.ajax({url:"act.php",method:"POST",data:"usersdelete="+a+"&delete"})}
+			let resetChannel=() => {$.ajax({url:"act.php",method:"POST",data:"channel="+channel+"&reset"})}
 <?php endif;?>
-			var createChannel=function(){ch_name=prompt("Entrez le nom de votre Channel");$.ajax({url:"act.php",method:"POST",data:"channel="+ch_name+"&create"})};
-			var changeChannel=function(a){$.ajax({url:"act.php",method:"POST",data:"change="+a,success:function(data){$("#messages").html(data);}});$("#ch-name").html(a);};
-			var getMessages=function(){$.ajax({url:"act.php",method:"POST",data:"get&channel="+channel,success:function(data){$("#messages").html(data);}})};
-			var getUsers=function(){$.ajax({url:"act.php",method:"POST",data:"get&users",success:function(data){$("#logged").html(data);}})};
-			var getChannels=function(){$.ajax({url:"act.php",method:"POST",data:"get&channels",success:function(data){$("#ch").html(data);}})};
-			var it_get = setInterval(getMessages,1000);
-			var it_users = setInterval(getUsers,1000);
-			var it_channels = setInterval(getChannels,1000);
+			let createChannel=() => {ch_name=prompt("Entrez le nom de votre Channel");$.ajax({url:"act.php",method:"POST",data:"channel="+ch_name+"&create"})};
+			let changeChannel=a => {$.ajax({url:"act.php",method:"POST",data:"change="+a,success:data => {$("#messages").html(data);}});$("#ch-name").html(a);};
+			let getMessages=() => {$.ajax({url:"act.php",method:"POST",data:"get&channel="+channel,success:data => {$("#messages").html(data);}})};
+			let getUsers=() => {$.ajax({url:"act.php",method:"POST",data:"get&users",success:data => {$("#logged").html(data);}})};
+			let getChannels=() => {$.ajax({url:"act.php",method:"POST",data:"get&channels",success:data => {$("#ch").html(data);}})};
+			let it_get = setInterval(getMessages,1000)
+			let it_users = setInterval(getUsers,1000)
+			let it_channels = setInterval(getChannels,1000)
 		</script>
 	</body>
 </html>
