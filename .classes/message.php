@@ -1,27 +1,47 @@
 <?php
-class Message{
+
+class Message {
 	protected $author;
 	protected $message;
 	protected $date;
 	protected $pseudo;
 
 	public function __construct($array){
-		$this->author  = $array["author"];
+		$this->author = $array["author"];
 		$this->message = $array["content"];
-		$this->date    = $array["date"];
+		$this->date = $array["date"];
 	}
 
-	public function toArray(){
-		return array("author" => $this->author,"content" => $this->message,"date" => $this->date);
+	/**
+	 * toArray function.
+	 * 
+	 * @return array of the message
+	 */
+	public function toArray() {
+		return array(
+			"author" => $this->author,
+			"content" => $this->message,
+			"date" => $this->date
+		);
 	}
 
-	public function html(){
+	/**
+	 * html function.
+	 * 
+	 * @return html formated
+	 */
+	public function html() {
 		ob_start();
 		require(__DIR__ . "/../.data/tpl/message.tpl");
 		return ob_get_clean();
 	}
 
-	public function __toString(){
+	/**
+	 * __toString function.
+	 * 
+	 * @return html function
+	 */
+	public function __toString() {
 		return $this->html();
 	}
 }
