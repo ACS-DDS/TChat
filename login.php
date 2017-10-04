@@ -43,31 +43,35 @@ endif;?>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans+Caption">
 	</head>
 	<body>
-		<div class="log1">
-			<h2 id="login">Veuillez vous connecter</h2>
-			<form id="login_erg" action="login" method="post">
-				<input id="nom" type="text" name="nom" placeholder="Nom">
-				<input id="prenom" type="text" name="prenom" placeholder="Prénom">
-				<input id="password" type="password" name="password" placeholder="Mot de passe">
-				<input id="send" type="submit" value="🔓">
-			</form>
-
-			<h2 id="register">Tu es nouveau ? Inscris-toi !</h2>
-			<form id="login_ins" action="register" method="post">
-				<input id="nom" type="text" name="nom" placeholder="Nom">
-				<input id="prenom" type="text" name="prenom" placeholder="Prénom"><br/>
-				<input id="password" type="password" name="password" placeholder="Mot de passe">
-				<input id="mail" type="mail" name="mail" placeholder="Adresse e-mail"><br/>
-				<input id="img" type="text" name="img" placeholder="Image de profil">
-				<input id="pseudo" type="text" name="pseudo" placeholder="Pseudo"><br/>
-				<input id="send" type="submit" value="✔">
-			</form>
-
-			<!-- <h2 id="guest">Connecte toi en tant qu'invité !</h2>
-			<form id="btn_guest" action="login" method="post">
-				<input type="hidden" name="login" value="guest">
-				<input id="log_guest" type="submit" value="Se connecter en tant qu'invité">
-			</form> -->
+		<section id="auth">
+			<section class="login">
+				<h2>Veuillez vous connecter</h2>
+				<form method="post">
+					<input type="text" name="nom" placeholder="Nom">
+					<input type="text" name="prenom" placeholder="Prénom">
+					<input type="password" name="password" placeholder="Mot de passe">
+					<input type="submit" value="🔓">
+				</form>
+			</section>
+			<section class="register">
+				<h2>Tu es nouveau ? Inscris-toi !</h2>
+				<form action="register" method="post">
+					<input type="text" name="nom" placeholder="Nom">
+					<input type="text" name="prenom" placeholder="Prénom"><br>
+					<input type="password" name="password" placeholder="Mot de passe">
+					<input type="mail" name="mail" placeholder="Adresse e-mail"><br>
+					<input type="text" name="img" placeholder="Image de profil">
+					<input type="text" name="pseudo" placeholder="Pseudo"><br>
+					<input type="submit" value="✔">
+				</form>
+			</section>
+			<!-- <section class="guest">
+				<h2>Connecte toi en tant qu'invité !</h2>
+				<form method="post">
+					<input type="hidden" name="login" value="guest">
+					<input type="submit" value="✔">
+				</form>
+			</section> -->
 
 <?php if(isset($_SESSION["errors"])) : ?>
 
@@ -75,11 +79,11 @@ endif;?>
 <?php foreach($_SESSION["errors"] as $messages) : µ?>
 			<p class="errors"><?=$messages;?></p>
 <?php endforeach;endif;?>
-		</div>
-		<div id="copyright">
+		</section>
+		<section id="copyright">
 			<p class="date"></p>
 			<p>Design by <a href="http://alexm.dijon.codeur.online" target="_blank">@Alex</a></p>
-		</div>
+		</section>
 	</body>
 </html>
 <?php session_destroy(); ?>

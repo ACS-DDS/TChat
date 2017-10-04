@@ -1,10 +1,10 @@
 <?php
 
-if(count($_POST) > 0) : 
+if (count($_POST) > 0) : 
 	require_once(".classes/controller.php");
 
 	session_start();
-	setlocale(LC_TIME,"fr_FR");
+	setlocale(LC_TIME, "fr_FR");
 	$_POST["date"] = microtime(true);
 
 	// LOGIN & LOGOUT
@@ -30,7 +30,7 @@ if(count($_POST) > 0) :
 		if(isset($_POST["delete"])) : 
 			// DELETE MESSAGE
 			if(isset($_POST["message"])) : 
-				$_SESSION["TChat"]->deleteMessage($_POST["message"],$_POST["time"]);
+				$_SESSION["TChat"]->deleteMessage($_POST["message"], $_POST["time"]);
 				var_dump($_POST);
 			endif;
 
@@ -63,7 +63,7 @@ if(count($_POST) > 0) :
 
 		// POST CHANNEL
 		if(isset($_POST["author"]) && isset($_POST["content"])) : 
-			$_SESSION["TChat"]->addMessages(array_map("trim",$_POST));
+			$_SESSION["TChat"]->addMessages(array_map("trim", $_POST));
 		endif;
 	endif;
 
@@ -73,10 +73,10 @@ if(count($_POST) > 0) :
 
 		// USERS GET
 		if(isset($_POST["get"])) : 
-			$a = $_SESSION["TChat"]->getMembers();
-			if(!empty($a)) : 
-				foreach($a as $b) :
-					echo $b;
+			$members = $_SESSION["TChat"]->getMembers();
+			if(!empty($members)) : 
+				foreach($members as $member) :
+					echo $member;
 				endforeach;
 			endif;
 		endif;
@@ -94,9 +94,9 @@ if(count($_POST) > 0) :
 
 		// CHANNELS GET
 		if(isset($_POST["get"])) : 
-			$a = $_SESSION["TChat"]->getChannels();
-			if(!empty($a)) : 
-				echo $a;
+			$channels = $_SESSION["TChat"]->getChannels();
+			if(!empty($channels)) : 
+				echo $channels;
 			endif;
 		endif;
 	endif;

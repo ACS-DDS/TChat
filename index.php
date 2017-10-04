@@ -62,11 +62,11 @@
 			<p>Assistant Technique: <a href="http://yassinl.dijon.codeur.online" target="_blank">@CrackJ</a></p>
 		</div>
 		<script type="text/javascript">
-            let channel = 'general'
-            let user
-            let ch_name
-            let a
-            let c
+			let channel = 'general'
+			let user
+			let ch_name
+			let a
+			let c
 
 			$(document).ready(() => {
 				window.location='#success'
