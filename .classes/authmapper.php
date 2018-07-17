@@ -10,7 +10,7 @@ class AuthMapper {
 	}
 
 	public function register($nom, $prenom, $password, $mail, $img, $pseudo) {
-		return true;
+		return true; // TODO
 	}
 
 	public function login($pseudo) {
@@ -47,6 +47,6 @@ class AuthMapper {
 		rename($this->file_temp, $this->file);
 
 		session_destroy();
-		header("Location: ./TChat/login");
+		header("Location: ./login");
 	}
 }

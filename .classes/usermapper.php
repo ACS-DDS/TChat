@@ -11,6 +11,10 @@ class UserMapper {
 		$this->file_temp = __DIR__ . "/../.data/db/users_temp.csv";
 	}
 
+	public function addMember(String $var = null) {
+		return false;
+	}
+
 	public function getMembers() {
 		$file = fopen($this->file, "r");
 

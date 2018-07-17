@@ -23,13 +23,9 @@ class User {
 		return array($this->nom, $this->pseudo, $this->status);
 	}
 
-	public function html() {
+	public function __toString() {
 		ob_start();
 		require(".data/tpl/users.tpl");
 		return ob_get_clean();
-	}
-
-	public function __toString() {
-		return $this->html();
 	}
 }

@@ -4,7 +4,7 @@ class ChannelMapper {
 	protected $fichier;
 
 	public function createChannel($name) {
-		if ($name != "null" || $name != "general") : 
+		if ($name != "general" || $name != "null") : 
 			if (!file_exists($this->fichier = __DIR__ . "/../.data/db/channels/" . $name . ".csv")) : 
 				touch($this->fichier);
 			endif;
@@ -12,7 +12,7 @@ class ChannelMapper {
 	}
 
 	public function deleteChannel($name) {
-		if ($name != "null" || $name != "general") : 
+		if ($name != "general" || $name != "null") : 
 			if (file_exists($this->fichier = __DIR__ . "/../.data/db/channels/" . $name . ".csv")) : 
 				unlink($this->fichier);
 			endif;

@@ -13,8 +13,8 @@ class Controller {
 	protected $channel_mapper;
 
 	public function __construct($channel = "general") {
-		$this->user_mapper    = new UserMapper();
-		$this->auth_mapper    = new AuthMapper();
+		$this->user_mapper = new UserMapper();
+		$this->auth_mapper = new AuthMapper();
 		$this->message_mapper = new MessageMapper($channel);
 		$this->channel_mapper = new ChannelMapper($channel);
 	}

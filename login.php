@@ -2,30 +2,28 @@
 require(".classes/controller.php");
 session_start();
 $errors = [];
-
 $_SESSION["TChat"] = new Controller();
 
-if(isset($_SESSION["username"])){
-	header("Location: ./TChat");
+if (isset($_SESSION["username"])) {
+	header("Location: ./");
 	exit;
 }
 
-if(isset($_POST["nom"])) : 
-	echo var_dump($_POST);
-	if(!isset($_POST["nom"]) || $_POST["nom"] == "" || !isset($_POST["prenom"]) || $_POST["prenom"] == "" || !isset($_POST["password"]) || $_POST["password"] == ""){
+if (isset($_POST["nom"])) : 
+	if (!isset($_POST["nom"]) || $_POST["nom"] == "" || !isset($_POST["prenom"]) || $_POST["prenom"] == "" || !isset($_POST["password"]) || $_POST["password"] == "") {
 		$errors[] = "Merci de renseigner tous les champs";
 		$_SESSION["errors"] = $errors;
-		header("Location: ./TChat/login");
+		header("Location: ./login");
 		exit;
 	}
 
-	if(isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["password"])){
-		$file = fopen(".data/db/users.csv","r");
+	if (isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["password"])) {
+		$file = fopen(".data/db/users.csv", "r");
 
-		while($data = fgetcsv($file,0)){
-			if($data[0] == $_POST["nom"] && $data[1] == $_POST["prenom"] && $data[2] == sha1(md5("raton" + $_POST["password"] + "laveur"))){
+		while ($data = fgetcsv($file, 0)) {
+			if ($data[0] == $_POST["nom"] && $data[1] == $_POST["prenom"] && $data[2] == sha1(md5("raton" + $_POST["password"] + "laveur"))) {
 				$_SESSION["username"] = $_POST["nom"] . " " . $_POST["prenom"];
-				header("Location: ./TChat");
+				header("Location: ./");
 				exit;
 			}
 		}
@@ -33,14 +31,15 @@ if(isset($_POST["nom"])) :
 
 	$errors[] = "Saisie incorrecte";
 	$_SESSION["errors"] = $errors;
-	header("Location: ./TChat/login");
-endif;?>
+	header("Location: ./login");
+endif;
+?>
 <html>
 	<head>
 		<title>TChat - Login</title>
 
-		<link rel="stylesheet" href="./static/css/login.css?<?=microtime(true);?>">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans+Caption">
+		<link rel="stylesheet" href="./assets/css/login.css?<?=microtime(true);?>">
 	</head>
 	<body>
 		<section id="auth">
@@ -82,7 +81,7 @@ endif;?>
 		</section>
 		<section id="copyright">
 			<p class="date"></p>
-			<p>Design by <a href="http://alexm.dijon.codeur.online" target="_blank">@Alex</a></p>
+			<p>Design by <a href="http://alexm-pro.fr" target="_blank">AlexM</a></p>
 		</section>
 	</body>
 </html>

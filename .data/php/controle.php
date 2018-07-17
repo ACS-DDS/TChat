@@ -2,12 +2,12 @@
 
 session_start();
 
-/* if($_SERVER['HTTP_REFERER'] != "./TChat/login"){
-	header("Location: ./TChat/hotlink");
+/* if($_SERVER['HTTP_REFERER'] != "./login"){
+	header("Location: ./hotlink");
 	exit;
 } */
-if(!isset($_SESSION["username"])) : 
-	header("Location: ./TChat/login");
+if (!isset($_SESSION["username"])) : 
+	header("Location: ./login");
 	exit;
 endif;
 ?>

@@ -26,22 +26,13 @@ class Message {
 	}
 
 	/**
-	 * html function.
-	 * 
-	 * @return html formated
-	 */
-	public function html() {
-		ob_start();
-		require(__DIR__ . "/../.data/tpl/message.tpl");
-		return ob_get_clean();
-	}
-
-	/**
 	 * __toString function.
 	 * 
 	 * @return html function
 	 */
 	public function __toString() {
-		return $this->html();
+		ob_start();
+		require(__DIR__ . "/../.data/tpl/message.tpl");
+		return ob_get_clean();
 	}
 }

@@ -46,7 +46,7 @@ class MessageMapper {
 
 		fclose($file);
 
-		if(empty($messages)) : 
+		if (empty($messages)) : 
 			return false;
 		else : 
 			return $messages;
